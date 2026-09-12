@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#050407">
+<title>A Little World Made For You</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;background:#050407}
+body{background:#050407;color:#eee9df;font-family:Manrope,sans-serif;font-weight:300;overflow-x:hidden}
+:root{--bg:#050407;--bg2:#09070b;--ivory:#eee9df;--muted:#a9a19a;--gold:#c5aa78;--rose:#754553;--line:rgba(238,233,223,.11);--serif:"Cormorant Garamond",Georgia,serif;--ease:cubic-bezier(.22,1,.36,1)}
+button{font:inherit}img,video{display:block;width:100%;height:100%;object-fit:cover}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;opacity:.025;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:99;background:radial-gradient(ellipse at center,transparent 48%,rgba(0,0,0,.5))}
+.loader{position:fixed;inset:0;z-index:9999;background:#020204;display:grid;place-items:center;transition:1.2s}
+.loader.hide{opacity:0;visibility:hidden}.loader i{display:block;width:130px;height:1px;background:var(--gold);animation:load 1.4s ease forwards}
+@keyframes load{0%{transform:scaleX(0);opacity:0}45%{opacity:1}100%{transform:scaleX(1);opacity:0}}
+.music{position:fixed;right:28px;top:24px;z-index:1000;background:none;border:0;color:#aaa2a0;letter-spacing:.25em;font-size:9px;cursor:pointer;display:flex;gap:9px;align-items:center}
+.bars{display:flex;gap:3px;align-items:center}.bars i{width:1px;height:5px;background:currentColor}.music.playing .bars i{animation:b 1s infinite alternate}.music.playing .bars i:nth-child(2){animation-delay:.2s}.music.playing .bars i:nth-child(3){animation-delay:.4s}
+@keyframes b{to{height:13px}}
+section{position:relative;overflow:hidden}.label{position:absolute;top:62px;left:6vw;color:#777074;font-size:9px;letter-spacing:.34em}.micro{color:var(--gold);font-size:9px;letter-spacing:.3em;text-transform:uppercase}
+.reveal{opacity:0;transform:translateY(30px);filter:blur(8px);transition:1.2s var(--ease)}.reveal.show{opacity:1;transform:none;filter:none}
+.serif{font-family:var(--serif)}
+#intro{height:100svh;min-height:650px;display:grid;place-items:center;background:radial-gradient(circle at center,rgba(91,43,58,.14),transparent 35%),#030204}
+.intro{text-align:center;position:relative;z-index:2}.light{width:7px;height:7px;border-radius:50%;background:#fff8e9;margin:auto auto 45px;box-shadow:0 0 18px #fff5df,0 0 70px rgba(197,170,120,.35);animation:pulse 4s infinite}
+@keyframes pulse{50%{transform:scale(1.4)}}.intro-kicker{font-size:9px;letter-spacing:.36em;animation:up 1.5s 1s both}.intro h1{font:400 clamp(42px,6vw,82px)/.9 var(--serif);margin-top:50px;animation:up 1.5s 2s both}.intro h2{font:italic 400 clamp(31px,4.8vw,64px)/1 var(--serif);color:#bcb4af;margin-top:18px;animation:up 1.5s 3.2s both}
+@keyframes up{from{opacity:0;transform:translateY(20px);filter:blur(12px)}to{opacity:1;transform:none;filter:none}}
+.scroll{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);font-size:8px;letter-spacing:.28em;color:#625d60;text-align:center}.scroll i{display:block;width:1px;height:35px;background:linear-gradient(#c5aa78,transparent);margin:12px auto 0}
+#story{padding:17vh 6vw 18vh;background:radial-gradient(ellipse at 70% 20%,rgba(76,36,50,.16),transparent 40%),var(--bg2)}
+.story-head{min-height:70vh;max-width:1200px;margin:auto;display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:10vw}.story-head h2{font:400 clamp(70px,9vw,145px)/.78 var(--serif);letter-spacing:-.06em;margin-top:28px}.story-head h2 em{display:block;margin-left:13%;color:#777174}.story-copy{max-width:400px;color:#898185;font-size:12px;line-height:2}.story-copy p+p{margin-top:22px;color:#a88c68}
+.chapter{max-width:1180px;margin:auto;min-height:88vh;display:grid;grid-template-columns:1fr .82fr;gap:8vw;align-items:center;border-bottom:1px solid rgba(255,255,255,.045);padding:10vh 0}.chapter:nth-child(even){grid-template-columns:.82fr 1fr}.chapter:nth-child(even) .frame{order:2}.chapter:nth-child(even) .info{order:1}.frame{height:68vh;min-height:430px;position:relative;background:#0b090d;border:1px solid var(--line);overflow:hidden}.frame:after{content:"";position:absolute;inset:18px;border:1px solid rgba(255,255,255,.07);pointer-events:none}.frame img,.frame video{transition:1.4s var(--ease);filter:saturate(.82)}.chapter:hover .frame img,.chapter:hover .frame video{transform:scale(1.035);filter:saturate(1)}
+.info .num{color:#746b68;font-size:9px;letter-spacing:.3em}.info h3{font:400 clamp(48px,5.3vw,82px)/.88 var(--serif);margin:24px 0;letter-spacing:-.04em}.info p{max-width:420px;color:#8b8586;font-size:12px;line-height:2}.meta{display:flex;gap:45px;margin-top:45px;padding-top:18px;border-top:1px solid var(--line)}.meta small{display:block;color:#625d60;font-size:7px;letter-spacing:.25em;margin-bottom:7px}.meta span{font-size:9px;color:#aaa2a0}
+#her{padding:17vh 6vw;background:#08070a}.her-head{max-width:950px;margin:10vh auto 12vh}.her-head h2{font:400 clamp(65px,8vw,125px)/.8 var(--serif);margin-top:28px;letter-spacing:-.055em}.her-head h2 em{display:block;margin-left:12%;color:#6f686b}.her-grid{max-width:1100px;margin:auto;display:grid;grid-template-columns:1.1fr .9fr;gap:18px}.her-grid .tile{position:relative;min-height:430px;border:1px solid var(--line);overflow:hidden;background:#0d0a0e}.her-grid .tile:nth-child(2){margin-top:80px}.her-grid .tile:nth-child(3){grid-column:1/-1;height:520px}.tile:after{content:"";position:absolute;inset:14px;border:1px solid rgba(255,255,255,.07);pointer-events:none}.tile-caption{position:absolute;left:25px;bottom:23px;z-index:2;font:italic 27px var(--serif);text-shadow:0 2px 15px #000}
+#little{padding:18vh 6vw 20vh;background:radial-gradient(ellipse at center,rgba(69,31,45,.15),transparent 50%),#09080b}.little-head{max-width:900px;margin:15vh auto 12vh;text-align:center}.little-head h2{font:400 clamp(70px,9vw,145px)/.8 var(--serif);margin:28px 0;letter-spacing:-.06em}.little-head h2 em{display:block;color:#716a6d}.little-head p{max-width:420px;margin:auto;color:#817b80;font-size:12px;line-height:2}.little-grid{max-width:950px;margin:auto;display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line)}.little-card{min-height:290px;padding:40px;background:#0b090d;cursor:pointer;display:flex;flex-direction:column}.little-card .n{font-size:8px;letter-spacing:.25em;color:#6f6263}.little-card h3{margin-top:auto;font:400 clamp(35px,4vw,52px)/.9 var(--serif)}.detail{max-height:0;overflow:hidden;opacity:0;color:#888084;font-size:11px;line-height:1.9;transition:.7s var(--ease)}.little-card:hover .detail,.little-card.open .detail{max-height:130px;opacity:1;margin-top:20px}
+#letters{padding:18vh 6vw 20vh;background:linear-gradient(#09080b,#050407)}.letters-head{max-width:1000px;margin:15vh auto 12vh}.letters-head h2{font:400 clamp(65px,8vw,125px)/.8 var(--serif);margin-top:28px;letter-spacing:-.055em}.letters-head h2 em{display:block;margin-left:13%;color:#6f686b}.letter-grid{max-width:1000px;margin:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.letter{min-height:350px;padding:28px 23px;border:1px solid var(--line);background:linear-gradient(145deg,rgba(255,255,255,.035),transparent);display:flex;flex-direction:column;cursor:pointer;transition:.8s var(--ease)}.letter:hover{transform:translateY(-10px);border-color:rgba(197,170,120,.3)}.letter .n{font-size:8px;color:#6d6263;letter-spacing:.25em}.letter h3{margin:auto 0;font:400 38px/.9 var(--serif)}.open{font-size:8px;letter-spacing:.2em;color:#777174}.open:after{content:"";display:inline-block;width:25px;height:1px;background:var(--gold);margin-left:10px;vertical-align:middle}
+.modal{position:fixed;inset:0;z-index:5000;display:grid;place-items:center;padding:25px;opacity:0;visibility:hidden;pointer-events:none;transition:.6s}.modal.active{opacity:1;visibility:visible;pointer-events:auto}.modal-bg{position:absolute;inset:0;background:rgba(1,1,2,.94);backdrop-filter:blur(18px)}.paper{position:relative;z-index:2;width:min(720px,100%);max-height:88vh;overflow:auto;padding:48px;background:linear-gradient(140deg,#eee8da,#cfc1aa);color:#2b2226;transform:translateY(30px) scale(.97);transition:1s var(--ease)}.modal.active .paper{transform:none}.paper-inner{padding:30px;border:1px solid rgba(43,34,38,.15)}.close{position:absolute;right:8px;top:8px;border:0;background:#08070a;color:#eee;width:38px;height:38px;border-radius:50%;cursor:pointer}.paper .tag{font-size:8px;letter-spacing:.28em;color:#73505b}.paper h4{font:italic 400 31px var(--serif);margin-top:30px}.paper-body{font:19px/1.75 var(--serif);margin-top:20px}.paper-body p{margin-bottom:18px}.paper-sign{font:italic 25px var(--serif);margin-top:40px}
+#universe{height:180vh;min-height:1400px;background:radial-gradient(ellipse at center,#140d18,#050408 58%,#010102)}#space{position:absolute;inset:0;width:100%;height:100%}.universe-text{position:sticky;top:0;height:100vh;display:grid;place-items:center;text-align:center;z-index:2;pointer-events:none}.universe-text h2{font:400 clamp(45px,6vw,90px)/.9 var(--serif);color:#aaa2a0}.universe-text h2 span{display:block;color:#eee9df;font-style:italic;margin-top:30px}.constellation-name{position:absolute;top:52%;left:50%;transform:translate(-50%,-50%) scale(.8);opacity:0;z-index:3;font:italic clamp(55px,9vw,125px) var(--serif);text-shadow:0 0 35px rgba(255,245,220,.3);transition:1.4s var(--ease)}.constellation-name.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+#future{padding:25vh 7vw 20vh;min-height:150vh;background:radial-gradient(ellipse at 50% 15%,rgba(89,44,52,.23),transparent 45%),#070507}.future-copy{max-width:1000px;margin:auto}.future-copy h2{font:400 clamp(50px,7vw,105px)/.9 var(--serif);letter-spacing:-.045em}.future-copy h2+h2{margin:35px 0 0 18%;color:#777174}.future-copy em{color:#eee9df}.future-frame{width:min(850px,100%);height:72vh;margin:18vh auto 0;position:relative;border:1px solid var(--line);overflow:hidden}.future-frame:after{content:"";position:absolute;inset:18px;border:1px solid rgba(255,255,255,.07);pointer-events:none}
+#final{min-height:125vh;display:grid;place-items:center;padding:15vh 7vw;background:radial-gradient(ellipse at center,rgba(95,45,58,.18),transparent 45%),#030204;text-align:center}.final{max-width:900px}.final-title{font:400 clamp(70px,10vw,160px)/.78 var(--serif);letter-spacing:-.06em;margin:30px 0}.final-title em{display:block;color:#7c7477}.final-intro{max-width:480px;margin:auto;font:400 23px/1.4 var(--serif);color:#91898c}.final-letter{max-width:570px;margin:75px auto 0;text-align:left;font:18px/1.9 var(--serif);color:#878084}.final-letter p{margin-bottom:22px}.signature{margin-top:70px;color:#625d60;font-size:8px;letter-spacing:.25em;text-transform:uppercase}.signature strong{display:block;margin-top:8px;color:#eee9df;font:italic 27px var(--serif);letter-spacing:0;text-transform:none}.heart{font:30px var(--serif);color:#aa8e68;margin-top:45px}.replay{position:absolute;bottom:38px;left:50%;transform:translateX(-50%);background:none;border:0;color:#777174;font-size:8px;letter-spacing:.25em;cursor:pointer}.replay i{display:block;width:0;height:1px;background:var(--gold);margin:8px auto 0;transition:.5s}.replay:hover i{width:100%}
+@media(max-width:900px){.story-head{grid-template-columns:1fr}.chapter,.chapter:nth-child(even){grid-template-columns:1fr;gap:45px}.chapter:nth-child(even) .frame,.chapter:nth-child(even) .info{order:initial}.frame{height:62vh}.letter-grid{grid-template-columns:repeat(2,1fr)}.her-grid{grid-template-columns:1fr}.her-grid .tile:nth-child(2){margin-top:0}.her-grid .tile:nth-child(3){grid-column:auto}}
+@media(max-width:600px){.music{right:15px;top:17px}.label{left:7vw;top:42px}.story-head h2{font-size:17vw}.chapter .frame{height:56vh;min-height:390px}.little-grid{grid-template-columns:1fr}.letter-grid{grid-template-columns:1fr}.letter{min-height:270px}.paper{padding:18px}.paper-inner{padding:22px}.paper-body{font-size:17px}.universe-text h2{font-size:45px;padding:20px}.constellation-name{font-size:58px}.future-copy h2{font-size:52px}.future-copy h2+h2{margin-left:5%}.future-frame{height:60vh}.final-title{font-size:76px}.final-letter{font-size:17px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.001ms!important;transition-duration:.001ms!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="loader"><i></i></div>
+<button class="music" id="music"><span>♪</span><span>MUSIC</span><span class="bars"><i></i><i></i><i></i></span></button>
+<audio id="audio" loop src=""></audio>
+
+<section id="intro">
+  <div class="intro">
+    <div class="light"></div>
+    <div class="intro-kicker">A LITTLE WORLD MADE FOR YOU</div>
+    <h1>I wanted to give you...</h1>
+    <h2>...something that no one could buy.</h2>
+  </div>
+  <div class="scroll">SCROLL TO BEGIN<i></i></div>
+</section>
+
+<section id="story">
+  <div class="label">01 — OUR STORY</div>
+  <div class="story-head">
+    <div class="reveal"><div class="micro">THE BEGINNING</div><h2>Every story <em>has a beginning.</em></h2></div>
+    <div class="story-copy reveal">
+      <p>في حاجات بتبدأ عادي جدًا، وبعدها بنكتشف إنها كانت بداية أحلى حاجة حصلت لنا.</p>
+      <p>ودي مش مجرد صور قديمة... دي شوية لحظات أنا لسه شايلها جوايا.</p>
+    </div>
+  </div>
+
+  <article class="chapter">
+    <div class="frame reveal"><img src="assets/images/first-photo.jpg" alt="Our first photo together"></div>
+    <div class="info reveal"><div class="num">01</div><div class="micro">THE FIRST PHOTO</div>
+      <h3>دي أول صورة لينا يا عسل.</h3>
+      <p>يمكن وقتها مكناش نعرف الصورة دي هتبقى مهمة قد إيه، بس دلوقتي كل ما أشوفها بحس قد إيه البداية دي كانت تستاهل.</p>
+      <div class="meta"><div><small>MEMORY</small><span>أول صورة لينا</span></div><div><small>PLACE</small><span>FIRST_PHOTO_PLACE</span></div></div>
+    </div>
+  </article>
+
+  <article class="chapter">
+    <div class="frame reveal"><img src="assets/images/birthday.jpg" alt="A birthday memory together"></div>
+    <div class="info reveal"><div class="num">02</div><div class="micro">ONE OF THOSE DAYS</div>
+      <h3>انا فاكر اليوم ده بكل تفاصيله.</h3>
+      <p>من الصور اللي أول ما أشوفهااشكر ربنا علي النعمه اللي فأيدي .</p>
+      <div class="meta"><div><small>MEMORY</small><span>13/9/2007</span></div><div><small>PLACE</small><span></span></div></div>
+    </div>
+  </article>
+
+  <article class="chapter">
+    <div class="frame reveal"><video src="assets/videos/birthday-moment.mp4" muted loop playsinline autoplay></video></div>
+    <div class="info reveal"><div class="num">03</div><div class="micro">A LITTLE MOMENT</div>
+      <h3>وفي لحظات مش محتاجة كلام.</h3>
+      <p>مجرد ثانية واحدة كفاية ترجعلي إحساس يوم كامل. عشان كده سيبت اللحظة دي تتحرك قدامك بدل ما تبقى مجرد صورة.</p>
+      <div class="meta"><div><small>MEMORY</small><span>كنتي مزه اوي اليوم ده </span></div></div>
+    </div>
+  </article>
+
+  <article class="chapter">
+    <div class="frame reveal"><img src="assets/images/roses.jpg" alt="A sweet memory with roses"></div>
+    <div class="info reveal"><div class="num">04</div><div class="micro">STILL US</div>
+      <h3>وكل مرة، بلاقي سبب جديد أحبك أكتر.</h3>
+      <p>مش عشان كل حاجة كانت مثالية، لكن عشان وسط كل حاجة، كنتِ إنتِ دايمًا أجمل جزء.</p>
+    </div>
+  </article>
+</section>
+
+<section id="her">
+  <div class="label">A LITTLE MORE ABOUT YOU</div>
+  <div class="her-head"><div class="micro reveal">THE GIRL BEHIND THE MEMORIES</div><h2 class="reveal">Before us, <em>there was you.</em></h2></div>
+  <div class="her-grid">
+    <div class="tile reveal"><img src="assets/images/portrait.jpg" alt="Her portrait"><div class="tile-caption">The girl I’m always proud of.</div></div>
+    <div class="tile reveal"><img src="assets/images/achievement.jpg" alt="Her receiving an award"><div class="tile-caption">وأنا فخور بيكي أكتر مما تتخيلي.</div></div>
+    <div class="tile reveal"><img src="assets/images/crazy.jpg" alt="A funny photo of her"><div class="tile-caption">And of course... your crazy side.</div></div>
+  </div>
+</section>
+
+<section id="little">
+  <div class="label">02 — THE LITTLE THINGS</div>
+  <div class="little-head"><div class="micro reveal">THE DETAILS I NOTICE</div><h2 class="reveal">It's the <em>little things.</em></h2><p class="reveal">الحاجات اللي ممكن الناس تعديها عادي... وأنا بقيت أحبها عشان بقت منك.</p></div>
+  <div class="little-grid">
+    <article class="little-card reveal"><span class="n">01</span><h3>ضحكتك.</h3><div class="detail">ضحكتك من الحاجات اللي بتفصلني عن أي حاجة وحشة، وبتخليني أضحك حتى لو مكنتش ناوي.</div></article>
+    <article class="little-card reveal"><span class="n">02</span><h3>اهتمامك.</h3><div class="detail">إنك تفتكري التفاصيل الصغيرة اللي أنا نفسي ساعات بنساها....</div></article>
+    <article class="little-card reveal"><span class="n">03</span><h3>جنونك.</h3><div class="detail">الجانب العشوائي والمجنون منك اللي بيخليني أقول: آه، دي كركورتي فعلًا.</div></article>
+    <article class="little-card reveal"><span class="n">04</span><h3>الأيام العادية.</h3><div class="detail">حتى اليوم اللي مفيهوش حاجة مميزة، وجودك فيه بيخليه عندي يستاهل يتفتكر.</div></article>
+    <article class="little-card reveal"><span class="n">05</span><h3>قلبك.</h3><div class="detail">أكتر حاجة بحبها إن ورا كل حاجة فيكي قلب حقيقي، وأنا محظوظ إني شوفته عن قرب.</div></article>
+    <article class="little-card reveal"><span class="n">06</span><h3>بس إنتِ.</h3><div class="detail">في الآخر، كل الأسباب دي ترجع لسبب واحد: إنك إنتِ، وده لوحده كفاية.</div></article>
+  </div>
+</section>
+
+<section id="letters">
+  <div class="label">03 — OPEN WHEN...</div>
+  <div class="letters-head"><div class="micro reveal">A FEW THINGS I NEVER WANT YOU TO FORGET</div><h2 class="reveal">For the moments <em>between the moments.</em></h2></div>
+  <div class="letter-grid">
+    <article class="letter reveal" data-i="0"><span class="n">01</span><h3>For You</h3><span class="open">OPEN LETTER</span></article>
+    <article class="letter reveal" data-i="1"><span class="n">02</span><h3>Things I Love</h3><span class="open">OPEN LETTER</span></article>
+    <article class="letter reveal" data-i="2"><span class="n">03</span><h3>Never Told You</h3><span class="open">OPEN LETTER</span></article>
+    <article class="letter reveal" data-i="3"><span class="n">04</span><h3>When You Miss Me</h3><span class="open">OPEN LETTER</span></article>
+  </div>
+</section>
+
+<div class="modal" id="modal"><div class="modal-bg"></div><div class="paper">
+  <button class="close" id="close">×</button><div class="paper-inner">
+  <div class="tag" id="tag"></div><h4 id="opening"></h4><div class="paper-body" id="body"></div><div class="paper-sign" id="sign"></div>
+  </div></div></div>
+
+<section id="universe">
+  <canvas id="space"></canvas>
+  <div class="label">04 — OUR UNIVERSE</div>
+  <div class="universe-text"><h2>In a universe full of people...<span>...I'm glad I found you.</span></h2></div>
+  <div class="constellation-name" id="constellation">HER_NAME</div>
+</section>
+
+<section id="future">
+  <div class="future-copy">
+    <h2 class="reveal">I've loved every chapter we've lived.</h2>
+    <h2 class="reveal">And I can't wait for the ones <em>we haven't written yet.</em></h2>
+  </div>
+  <div class="future-frame reveal"><img src="assets/images/stairs.jpg" alt="A favorite photo together"></div>
+</section>
+
+<section id="final">
+  <div class="final">
+    <div class="micro reveal">FOR YOU, ALWAYS</div>
+    <h2 class="final-title reveal">Happy Birthday, <em>My Love.</em></h2>
+    <p class="final-intro reveal">كل سنة وإنتِ أحلى حاجة حصلتلي، وكل سنة وأنا ممتن إنك في حياتي.</p>
+    <div class="final-letter reveal">
+      <p>أنا عايز أقولك إني بحبك حب مش طبيعي، وإنتِ اللي عرفتيني معنى الحب اللي بجد، وإنتِ اللي بتخليني أحسن، وبتكوني جنبي وأنا تعبان.</p>
+      <p>كل سنة بنخشها سوا بحس إني اخترت صح. وكل سنة وإنتِ معايا، وكل سنة وإنتِ مطلعة عيني، وكل سنة وإحنا سوا يا حبيبتي.</p>
+      <p>يارب السنة دي تحققلك كل اللي نفسك فيه، وتفضلي دايمًا مبسوطة وبتضحكي، عشان مفيش حاجة بتبسطني قد إني أشوفك مبسوطة.</p>
+      <p>ولو فضلت أكتب من هنا للسنة الجاية، مش هوفيكي حقك بجد. ربنا يديمك نعمة في حياتي وميحرمنيش منك أبدًا.</p>
+    </div>
+    <div class="signature"><span>Made for you, by</span><strong id="hisName">HIS_NAME</strong></div>
+    <div class="heart">♡</div>
+  </div>
+  <button class="replay" id="replay">REPLAY OUR STORY<i></i></button>
+</section>
+
+<script>
+const CONFIG={HER_NAME:"كركورة",HIS_NAME:"Vero",MUSIC:"assets/music/background-music.mp3"};
+document.getElementById("constellation").textContent=CONFIG.HER_NAME;
+document.getElementById("hisName").textContent=CONFIG.HIS_NAME;
+window.addEventListener("load",()=>setTimeout(()=>document.querySelector(".loader").classList.add("hide"),650));
+
+const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("show");observer.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll(".reveal").forEach(x=>observer.observe(x));
+
+document.querySelectorAll(".little-card").forEach(x=>x.onclick=()=>x.classList.toggle("open"));
+
+const letters=[
+ {tag:"FOR YOU",opening:"يا حبيبتي،",body:["إنتِ مش مجرد حد بحبه... إنتِ الشخص اللي خلاني أفهم إن الحب ممكن يغيّر الواحد للأحسن.","وجودك في حياتي نعمة أنا مش باخدها كأمر مسلم بيه.","كل سنة وإنتِ معايا، وكل سنة وأنا بحبك أكتر."],sign:"ربنا يخليكي ليا."},
+ {tag:"THINGS I LOVE",opening:"لو حاولت أعدهم كلهم، مش هخلص.",body:["بحب ضحكتك، وطريقتك، واهتمامك، وحتى الحاجات اللي بتقولي عليها عن نفسك إنها عادية.","بحب إنك بتعرفي تفرحيني من غير ما تحاولي.","وبحب أكتر حاجة إن كل يوم معاكي بيخليني أكتشف سبب جديد."],sign:"انا بجد محظوظ بيكي."},
+ {tag:"NEVER TOLD YOU",opening:"في حاجة يمكن مقلتهاش كفاية...",body:["أنا فعلًا بفتخر بيكي. في كل مرة بشوفك بتكبري وتتقدمي.","وبحب أشوفك مبسوطة وناجحة، حتى في الحاجات الصغيرة اللي محدش غيري ياخد باله منها.","إنتِ تستاهلي كل حاجة حلوة جاية."],sign:"وأنا أول واحد هيصدق فيكي."},
+ {tag:"WHEN YOU MISS ME",opening:"لو في يوم وحشتك،",body:["افتكري إن في حد في الدنيا دي شايل تفاصيلك جواه، وبيفتكر ضحكتك وصوتك وكل لحظة حلوة بينا.","افتكري أول صورة لينا، وكل الصور اللي بعدها، وقد إيه الحكاية كبرت واحدة واحدة.","ومهما بعدت المسافات، إنتِ لسه أقرب حد لقلبي."],sign:"بحبك، أكتر مما الكلام يعرف يقول."}
+];
+const modal=document.getElementById("modal"),tag=document.getElementById("tag"),opening=document.getElementById("opening"),body=document.getElementById("body"),sign=document.getElementById("sign");
+function openLetter(i){let l=letters[i];tag.textContent=l.tag;opening.textContent=l.opening;body.innerHTML=l.body.map(p=>`<p>${p}</p>`).join("");sign.textContent=l.sign;modal.classList.add("active");document.body.style.overflow="hidden"}
+function closeLetter(){modal.classList.remove("active");document.body.style.overflow=""}
+document.querySelectorAll(".letter").forEach(x=>x.onclick=()=>openLetter(+x.dataset.i));
+document.getElementById("close").onclick=closeLetter;document.querySelector(".modal-bg").onclick=closeLetter;document.onkeydown=e=>{if(e.key==="Escape")closeLetter()};
+
+const audio=document.getElementById("audio"),music=document.getElementById("music");
+if(CONFIG.MUSIC){audio.src=CONFIG.MUSIC}
+music.onclick=async()=>{if(audio.paused){try{await audio.play();audio.volume=.2;music.classList.add("playing")}catch(e){alert("حط ملف الأغنية في assets/music/background-music.mp3")}}else{audio.pause();music.classList.remove("playing")}};
+
+document.getElementById("replay").onclick=()=>scrollTo({top:0,behavior:"smooth"});
+
+const canvas=document.getElementById("space"),ctx=canvas.getContext("2d"),universe=document.getElementById("universe");
+let W,H,stars=[];const points=[.34,.43,.42,.34,.53,.38,.64,.48,.57,.59,.45,.62,.36,.53,.50,.50];
+function resize(){W=canvas.width=innerWidth;H=canvas.height=universe.offsetHeight;canvas.style.width=W+"px";canvas.style.height=H+"px";stars=Array.from({length:innerWidth<600?120:260},()=>({x:Math.random()*W,y:Math.random()*H,r:.2+Math.random()*1.1,a:.08+Math.random()*.45,p:Math.random()*6.28}))}
+function draw(t){ctx.clearRect(0,0,W,H);stars.forEach(s=>{ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,7);ctx.fillStyle=`rgba(238,233,223,${s.a+Math.sin(t*.001+s.p)*.06})`;ctx.fill()});
+let r=universe.getBoundingClientRect(),travel=universe.offsetHeight-innerHeight,prog=Math.max(0,Math.min(1,-r.top/Math.max(1,travel))),cp=Math.max(0,Math.min(1,(prog-.16)/.58));
+let pts=[];for(let i=0;i<8;i++)pts.push({x:points[i*2]*W,y:points[i*2+1]*H});
+for(let i=1;i<pts.length;i++){let q=Math.max(0,Math.min(1,cp*pts.length-i));if(q){ctx.beginPath();ctx.moveTo(pts[i-1].x,pts[i-1].y);ctx.lineTo(pts[i-1].x+(pts[i].x-pts[i-1].x)*q,pts[i-1].y+(pts[i].y-pts[i-1].y)*q);ctx.strokeStyle=`rgba(197,170,120,${.16*q})`;ctx.lineWidth=.7;ctx.stroke()}}
+pts.forEach((p,i)=>{let q=Math.max(0,Math.min(1,cp*pts.length-i));if(!q)return;ctx.beginPath();ctx.arc(p.x,p.y,1.7,0,7);ctx.fillStyle=`rgba(255,247,226,${q})`;ctx.fill()});
+document.getElementById("constellation").classList.toggle("show",cp>.82);requestAnimationFrame(draw)}
+addEventListener("resize",resize);resize();requestAnimationFrame(draw);
+</script>
+</body>
+</html>
